@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Refresh Roadmap</title>
+<style>
+:root{
+  --bg:#f5f7fb;--panel:#fff;--text:#172033;--muted:#667085;
+  --border:#e5e7eb;--accent:#315efb;--accent2:#eef2ff;--sidebar:#111827;
+  --sidebarText:#d1d5db;--success:#0f9d58;--warning:#b7791f;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+button{font:inherit}
+.app{display:flex;min-height:100vh}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:310px;background:var(--sidebar);color:var(--sidebarText);overflow:auto;padding:22px 16px;z-index:10}
+.brand{padding:4px 10px 20px;border-bottom:1px solid #374151;margin-bottom:16px}
+.brand h1{color:#fff;font-size:21px;margin:0 0 4px}
+.brand p{font-size:12px;color:#9ca3af;margin:0}
+.progress-wrap{padding:12px 10px 18px}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:#9ca3af;margin-bottom:7px}
+.progress{height:7px;background:#374151;border-radius:20px;overflow:hidden}
+.progress-bar{height:100%;width:0;background:#60a5fa;transition:.25s}
+.nav-section{margin:8px 0}
+.nav-section-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;padding:10px}
+.nav-item{display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;color:var(--sidebarText);text-align:left;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px}
+.nav-item:hover,.nav-item.active{background:#1f2937;color:#fff}
+.nav-item .dot{width:6px;height:6px;border-radius:50%;background:#6b7280;flex:none}
+.nav-item.done .dot{background:#34d399}
+.nav-item.done{color:#a7f3d0}
+.main{margin-left:310px;width:calc(100% - 310px)}
+.topbar{position:sticky;top:0;z-index:5;background:rgba(245,247,251,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:12px 34px;display:flex;gap:12px;align-items:center}
+.menu-btn{display:none}
+.search{flex:1;max-width:520px;border:1px solid var(--border);border-radius:8px;padding:9px 12px;background:#fff;outline:none}
+.search:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}
+.reset{margin-left:auto;border:1px solid var(--border);background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer;color:#475467}
+.content{max-width:1000px;margin:auto;padding:42px 34px 80px}
+.hero{background:linear-gradient(135deg,#172554,#315efb);color:#fff;border-radius:18px;padding:38px;margin-bottom:30px}
+.hero h2{font-size:34px;line-height:1.15;margin:0 0 12px}
+.hero p{max-width:760px;color:#dbeafe;margin:0}
+.hero .roadmap{margin-top:22px;display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:5px 9px;border-radius:999px}
+.level{margin-top:42px;scroll-margin-top:80px}
+.level-title{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.level-number{background:var(--accent);color:#fff;border-radius:8px;padding:5px 9px;font-size:12px;font-weight:700}
+.level h2{font-size:25px;margin:0}
+.topic{background:var(--panel);border:1px solid var(--border);border-radius:12px;margin:12px 0;overflow:hidden;scroll-margin-top:85px}
+.topic-header{width:100%;border:0;background:#fff;text-align:left;padding:18px 20px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.topic-header:hover{background:#fafbff}
+.topic-title{font-size:17px;font-weight:700;flex:1}
+.topic-status{font-size:11px;color:var(--muted)}
+.chevron{font-size:18px;color:#98a2b3;transition:.2s}
+.topic.open .chevron{transform:rotate(90deg)}
+.topic-body{display:none;padding:0 20px 24px;border-top:1px solid var(--border)}
+.topic.open .topic-body{display:block}
+.topic-body h3{font-size:16px;margin:22px 0 8px}
+.topic-body p{margin:8px 0}
+.topic-body ul{padding-left:22px}
+.example{background:#f8fafc;border-left:4px solid #93c5fd;padding:12px 15px;margin:12px 0;border-radius:0 7px 7px 0}
+.example strong{display:block;margin-bottom:3px}
+.rule{background:#eff6ff;border:1px solid #dbeafe;border-radius:8px;padding:12px 15px;margin:12px 0}
+.warning{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 15px;margin:12px 0}
+.exercise{border:1px solid var(--border);border-radius:9px;padding:14px;margin:10px 0;background:#fff}
+.exercise p{margin:0 0 8px}
+.answer{display:none;margin-top:8px;padding:9px 11px;background:#ecfdf3;border-radius:7px;color:#166534}
+.answer.show{display:block}
+.show-answer{border:0;background:#eef2ff;color:#315efb;border-radius:6px;padding:6px 9px;cursor:pointer;font-size:12px}
+.complete{margin-top:18px;display:flex;align-items:center;gap:8px;color:#475467;font-size:13px}
+.complete input{width:17px;height:17px}
+code{background:#f2f4f7;padding:2px 5px;border-radius:4px}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px;text-align:left}
+th{background:#f8fafc}
+.empty{padding:30px;text-align:center;color:var(--muted);display:none}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:35px}
+@media(max-width:900px){
+ .sidebar{transform:translateX(-100%);transition:.25s;width:290px}.sidebar.open{transform:translateX(0)}
+ .main{margin-left:0;width:100%}.menu-btn{display:block;border:1px solid var(--border);background:#fff;border-radius:8px;padding:7px 10px;cursor:pointer}
+ .content{padding:28px 18px 60px}.topbar{padding:10px 14px}.hero h2{font-size:28px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <h1>🇬🇧 English Refresh</h1>
+    <p>Your personal English review course</p>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progress</span><span id="progressText">0%</span></div>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+  </div>
+  <nav id="nav"></nav>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <input class="search" id="search" placeholder="Search a topic...">
+  <button class="reset" id="resetBtn">Reset progress</button>
+</header>
+<div class="content" id="content">
+<section class="hero">
+  <h2>English Refresh Roadmap</h2>
+  <p>A structured review of the English you learned before, designed to reactivate rusty knowledge, find gaps, and turn grammar knowledge into active speaking ability.</p>
+  <div class="roadmap">
+    <span class="badge">Grammar</span><span class="badge">Vocabulary</span><span class="badge">Pronunciation</span><span class="badge">Speaking</span><span class="badge">Practice</span>
+  </div>
+</section>
+<div id="lessons"></div>
+<div class="empty" id="empty">No topics found. Try another search.</div>
+<footer>English Refresh Roadmap • Study → Practice → Speak → Review</footer>
+</div>
+</main>
+</div>
+
+<script>
+const sections = [
+{title:"01 · Foundations", topics:[
+["Verb to Be","Learn am, is and are. Use them for identity, descriptions, locations, states and continuous forms.","The present forms are <b>am</b> with I, <b>is</b> with he/she/it, and <b>are</b> with you/we/they. Negatives add <b>not</b>. Questions invert the verb and subject.","I am a computer engineer. / She isn't at home. / Are they ready?","Spanish speakers often omit the verb: “I tired” ❌ → “I am tired” ✅.","Complete: I ___ tired. / ___ she your sister? / They ___ not at home.","am; Is; are"],
+["Subject & Object Pronouns","Pronouns replace nouns. Subject pronouns perform the action; object pronouns receive it.","Subject: I, you, he, she, it, we, they. Object: me, you, him, her, it, us, them.","She called me. / I helped them. / They invited us.","Do not confuse “I” and “me”: “My friend and I went” but “She called my friend and me.”","Choose: ___ called him. (I/me) / She helped ___. (we/us) / ___ are ready. (They/Them)","I; us; They"],
+["Possessives","Express ownership with possessive adjectives, possessive pronouns and 's.","My, your, his, her, its, our, their come before nouns. Mine, yours, his, hers, ours, theirs stand alone. Use 's with people and many singular nouns.","This is my book. / The book is mine. / Katy's car is new.","Its = belonging to it. It's = it is. “The company changed its policy.”","Complete: This is ___ laptop. (I) / The house is ___. (they) / ___ brother is here. (John)","my; theirs; John's"],
+["Articles: a, an, the","Articles tell us whether a noun is general or specific.","Use <b>a/an</b> for one non-specific countable noun; <b>the</b> for a specific/known noun. No article is often used for general plural or uncountable ideas.","I saw a dog. The dog was friendly. / I like coffee.","The choice between a/an depends on sound, not spelling: an hour, a university.","Choose: I need ___ umbrella. / ___ sun is bright. / I like ___ music.","an; The; music"],
+["Demonstratives","This/these refer to things near you; that/those refer to things farther away.","This = singular near. These = plural near. That = singular far. Those = plural far.","This book is mine. / Those shoes are expensive.","Remember the singular/plural pair: this→these, that→those.","Choose: ___ is my phone. (near) / ___ are my keys. (far)","This; Those"],
+["Plurals","Most nouns add -s, but English has spelling rules and irregular plurals.","box→boxes, city→cities, knife→knives, child→children, man→men, person→people.","I have two brothers. / There are three children.","Some nouns are uncountable and normally do not take plural -s: information, advice, furniture, equipment.","Give plurals: child, city, box, person.","children; cities; boxes; people"],
+["Basic Sentence Structure","English normally follows Subject + Verb + Object. Word order is less flexible than Spanish.","Statements: subject + verb + object. Questions use auxiliaries or inversion. Adverbs have common positions.","I study English every day. / She bought a car.","Avoid translating Spanish word order directly. Build English sentences in chunks.","Reorder: every day / English / I / study. / She / coffee / likes.","I study English every day. / She likes coffee."]
+]},
+{title:"02 · Essential Tenses", topics:[
+["Present Simple","Use it for routines, facts, habits and repeated actions.","I/you/we/they use the base verb. He/she/it usually adds -s or -es. Questions use do/does.","I work from home. / He works in IT. / Does she drive?","After does, use the base form: “Does he works?” ❌ → “Does he work?” ✅.","Complete: She ___ (work) every day. / ___ you like coffee? / He ___ (not/live) here.","works; Do; doesn't live"],
+["Present Continuous","Use am/is/are + verb-ing for actions happening now, temporary situations and arrangements.","I am working. You are studying. She is sleeping. Some verbs such as know, believe and understand are usually not continuous.","I'm studying English right now. / We're meeting tomorrow.","Do not automatically use -ing with stative verbs: “I am knowing” is normally incorrect.","Complete: I ___ (study) now. / They ___ (watch) TV. / She ___ (work) today.","am studying; are watching; is working"],
+["Past Simple","Use it for finished actions at a definite time in the past.","Regular verbs add -ed; irregular verbs change form. Questions and negatives use did + base verb.","I visited New York last year. / I went home early. / Did you see him?","After did/didn't, use the base verb: “Did you went?” ❌ → “Did you go?” ✅.","Complete: Yesterday I ___ (go) home. / She ___ (not/call). / ___ you see him?","went; didn't call; Did"],
+["Past Continuous","Use was/were + -ing for an action in progress at a past moment, often interrupted by another action.","I was sleeping when you called. They were talking while I was working.","It often contrasts background action with a shorter Past Simple event.","Use was with I/he/she/it and were with you/we/they.","Complete: I ___ (sleep) when he called. / They ___ (work) at 8 PM.","was sleeping; were working"],
+["Future with Will","Use will for predictions, spontaneous decisions, promises, offers and willingness.","will + base verb. Negative: won't. Question: Will + subject + verb?","I'll call you later. / I think it will rain. / Will you help me?","For a plan already decided, going to or Present Continuous may be more natural.","Make a sentence: prediction about tomorrow / spontaneous offer to help.","Answers vary."],
+["Going to","Use be going to for intentions/plans and predictions based on present evidence.","am/is/are + going to + base verb.","I'm going to study tonight. / Look at those clouds. It's going to rain.","Do not forget the verb be: “I going to” ❌ → “I'm going to” ✅.","Complete: We ___ going to travel. / She ___ going to study.","are; is"],
+["Present Perfect","Use have/has + past participle for experiences, recent results and past actions connected to the present.","Common words: ever, never, already, yet, just, since, for.","I've visited the US. / She has just arrived. / I've lived here for five years.","Do not normally use Present Perfect with finished-time expressions such as yesterday or in 2020.","Choose: I ___ never ___ (see) snow. / She ___ already ___ (finish).","have never seen; has already finished"],
+["Present Perfect Continuous","Use have/has been + -ing to emphasize duration or ongoing/recent activity.","I've been studying for two hours. / She's been working all morning.","It often answers “How long?” and focuses on the activity rather than the completed result.","Complete: I ___ been studying since 8. / They ___ been waiting for an hour.","have; have"],
+["Past Perfect","Use had + past participle for an action that happened before another past action.","When I arrived, she had already left.","Think of it as “the past before the past.”","Use it when the sequence would otherwise be unclear or when you want to emphasize the earlier event.","Complete: When I arrived, they ___ already ___ (leave).","had already left"],
+["Past Perfect Continuous","Use had been + -ing to emphasize duration before another past point/event.","I had been waiting for an hour when the bus arrived.","It combines past-before-past with an ongoing activity.","Complete: He ___ been working for three hours when I called.","had"],
+["Future Continuous","Use will be + -ing for an action that will be in progress at a future time.","At 8 PM tomorrow, I'll be working.","It can sound natural for asking about someone's plans without suggesting a demand: “Will you be using the car?”","Complete: This time tomorrow, I ___ be flying.","will"],
+["Future Perfect","Use will have + past participle for something completed before a future deadline/time.","By Friday, I will have finished the project.","Common signal: by + future time.","Complete: By next month, she ___ have ___ (finish) the course.","will have finished"]
+]},
+{title:"03 · Verbs", topics:[
+["Irregular Verbs","Learn the three useful forms: base, Past Simple and past participle.","Example: go → went → gone; see → saw → seen; take → took → taken; write → wrote → written.","I went there yesterday. / I have gone there before.","Do not memorize only translations. Say a sentence with each form.","Give the missing forms: go → went → ___ / write → ___ → written / take → took → ___.","gone; wrote; taken"],
+["Auxiliary Verbs","Do, be and have help form questions, negatives and tenses.","Do/does/did support simple questions and negatives. Be forms continuous and passive structures. Have forms perfect tenses.","Do you work? / She is working. / They have finished.","The main verb after do/does/did stays in the base form.","Identify the auxiliary: “Did you call?” / “She is working.” / “They have finished.”","did; is; have"],
+["Modal Verbs","Modals express ability, possibility, permission, obligation, advice and hypothetical meaning.","can/could, may/might, must, should, would, will. Modal + base verb: can go, should study.","You should practice. / I can help. / It might rain. / You must be careful.","Never add “to” after most modals: “You should to go” ❌.","Choose: advice / ability / possibility: You ___ see a doctor. / I ___ swim. / It ___ rain.","should; can; might"],
+["Phrasal Verbs","A verb + particle often creates a new meaning. They are extremely common in spoken English.","get up, wake up, find out, figure out, look for, look after, give up, turn on/off, pick up, put off.","I need to find out what happened. / Don't give up.","Learn them as chunks and in context, not as isolated translations.","Match: give up / look for / turn off with: stop trying / search for / deactivate.","give up→stop trying; look for→search; turn off→deactivate"]
+]},
+{title:"04 · Questions & Negatives", topics:[
+["WH Questions","Use what, where, when, why, who, which, whose and how to request information.","How combines with many expressions: how much, how many, how long, how often, how far, how old.","Where do you live? / How often do you exercise?","Question word + auxiliary + subject + base verb is common: What do you want?","Write questions for: place / frequency / reason / duration.","Answers vary."],
+["Question Formation","English questions usually need an auxiliary or a form of be.","Present Simple: Do you work? Past Simple: Did you work? Continuous: Are you working? Perfect: Have you worked?","Did you go? / Are they ready? / Have you finished?","Do not use did with the past form: “Did you went?” ❌.","Turn into questions: You work here. / She went home. / They are ready.","Do you work here? / Did she go home? / Are they ready?"],
+["Negative Sentences","Negatives use not with be, auxiliaries, modals and perfect forms.","don't/doesn't/didn't + base verb; isn't/aren't/wasn't/weren't; haven't/hasn't; can't/won't.","I don't know. / He didn't call. / She isn't ready.","Avoid double negatives in standard English: “I don't know nothing” is not standard.","Make negative: I like coffee. / She went there. / They are ready.","I don't like coffee. / She didn't go there. / They aren't ready."]
+]},
+{title:"05 · Nouns, Adjectives & Adverbs", topics:[
+["Countable & Uncountable Nouns","Countable nouns can be singular/plural; uncountable nouns are treated as mass concepts.","a book/books; some information; some advice; furniture; equipment; money.","I need some information. / I bought two chairs.","Do not say “informations” or “advices” in standard English. Say “pieces of information/advice.”","Choose: two ___ (advice/instructions); some ___ (information/informations); three ___. (chairs/furniture)","pieces of advice; information; chairs"],
+["Quantifiers","Quantifiers show quantity.","many/few/a few for countable nouns; much/little/a little for uncountable nouns; a lot of for both; enough, too much, too many.","There are many people. / I don't have much time. / We have enough money.","Few = not many; a few = some. Little = not much; a little = some.","Choose: ___ water / ___ people / ___ time.","a little; many; a little"],
+["Adjectives","Adjectives describe nouns and normally come before nouns or after linking verbs.","a difficult problem; The problem is difficult.","Common order: opinion → size → age → shape → color → origin → material → noun.","Be careful with -ed/-ing adjectives: bored = feeling; boring = causing the feeling.","Choose: The movie was ___ (boring/bored). I was ___ (boring/bored).","boring; bored"],
+["Adverbs","Adverbs modify verbs, adjectives or other adverbs. Many manner adverbs end in -ly.","quickly, carefully, probably, usually, already, still, just.","She speaks slowly. / I usually work at home.","Frequency adverbs often come before the main verb but after be: I usually work. I am usually tired.","Place the adverb: “I / work / usually / from home.”","I usually work from home."],
+["Comparisons","Use comparative forms to compare two things and superlatives for three or more.","fast→faster→the fastest; interesting→more interesting→the most interesting; good→better→the best.","My car is older than yours. / This is the best option.","Do not combine “more” with a regular -er comparative: more easier ❌.","Make comparative/superlative: good, expensive, small.","better/the best; more expensive/the most expensive; smaller/the smallest"]
+]},
+{title:"06 · Prepositions", topics:[
+["Time Prepositions","Use at for clock times, on for days/dates and in for months, years and longer periods.","at 8 PM; on Monday; on July 5; in 2026; in the morning.","I work at night. / The meeting is on Friday. / I was born in 1994.","Common expressions have fixed choices: at night, in the morning, on the weekend (common in American English).","Choose: ___ Monday / ___ 7 PM / ___ 2026.","on; at; in"],
+["Place Prepositions","Describe location with in, on, at, under, above, below, between, behind, next to and across from.","The keys are on the table. / She is at work. / The store is across from the bank.","In often means inside an area/container; on often means touching a surface; at can identify a point/place.","Describe a room using at least three prepositions.","Answers vary."],
+["Movement Prepositions","Show movement with to, from, into, out of, through, across, toward and around.","She walked into the room. / He ran across the street. / We drove through the tunnel.","Into emphasizes movement from outside to inside; in describes location.","Choose: He walked ___ the room. / They came ___ Canada. / We drove ___ the tunnel.","into; from; through"],
+["Verb + Preposition","Many verbs naturally pair with specific prepositions.","listen to, depend on, wait for, look at, talk about, belong to.","I'm waiting for the bus. / It depends on the situation.","Learn the pair as one chunk rather than translating word by word.","Complete: listen ___ music / depend ___ someone / wait ___ me.","to; on; for"]
+]},
+{title:"07 · Intermediate Grammar", topics:[
+["Gerunds & Infinitives","Some verbs are followed by -ing; others by to + base verb.","enjoy reading; avoid driving; want to learn; need to work.","Some verbs allow both with a change or little change in meaning: remember doing vs remember to do.","After prepositions, use -ing: interested in learning.","Complete: I enjoy ___ (read). / I want ___ (learn). / She is good at ___ (cook).","reading; to learn; cooking"],
+["Conditionals","Conditionals connect a condition with a result.","Zero: If you heat ice, it melts. First: If I have time, I'll call. Second: If I had time, I'd travel. Third: If I had studied, I would have passed.","Second = hypothetical present/future. Third = unreal past.","Do not use “would” in the if-clause in standard first/second/third conditional structures.","Identify: If I study, I'll pass. / If I were rich, I'd travel. / If I had known, I'd have helped.","first; second; third"],
+["Passive Voice","Use be + past participle when the action/result is more important than the doer.","The company built the system. → The system was built by the company.","The tense moves to be: is built, was built, has been built, will be built.","Do not confuse past simple active with passive: “They repaired it” vs “It was repaired.”","Change to passive: They built the bridge. / Someone has stolen my phone.","The bridge was built. / My phone has been stolen."],
+["Reported Speech","Report what someone said without quoting the exact words.","“I'm tired.” → She said (that) she was tired. “I will call.” → He said he would call.","Pronouns, time expressions and tenses may change depending on context.","say + statement; tell + person + statement: She said she was busy. She told me she was busy.","Report: “I am busy,” John said. / “I will call you,” she said.","John said (that) he was busy. / She said she would call me."],
+["Relative Clauses","Use who, which, that, whose, where and when to connect information about a noun.","The man who lives here is my neighbor. / The book that I bought is useful.","Defining clauses identify which person/thing. Non-defining clauses add extra information and use commas.","Who is generally for people; which for things; that is common in defining clauses.","Combine: I met a man. He works in IT. / This is the book. I bought it yesterday.","I met a man who works in IT. / This is the book that I bought yesterday."],
+["Conjunctions & Connectors","Connect ideas clearly and show contrast, cause, result and condition.","and, but, or, so, because, although, while, whereas, unless, therefore, however.","I was tired, but I kept studying. / Although it was late, I continued.","However is commonly a sentence connector, while but directly joins contrasting clauses.","Join: I was tired. I studied. / It was raining. We went out.","I was tired, but I studied. / Although it was raining, we went out."]
+]},
+{title:"08 · Advanced Grammar", topics:[
+["Advanced & Mixed Conditionals","Mixed conditionals connect different time frames, often past causes with present results.","If I had studied harder, I would have a better job now. (past cause → present result)","Use them when the condition and result belong to different times.","Focus on meaning before memorizing formulas.","Create one sentence about a past decision with a present consequence.","Answers vary."],
+["Advanced Passive Structures","Passive voice can be combined with perfect, modal and continuous forms.","The work has been completed. / The problem must be fixed. / The system is being tested.","These structures are useful in formal and professional English.","Identify the passive: “The server is being monitored.”","is being monitored"],
+["Causatives","Have/get + object + past participle means arranging for someone else to do something.","I had my car repaired. / She got her laptop fixed.","It differs from simple active voice: you are not necessarily the person doing the repair.","Rewrite: A mechanic repaired my car. → I ___ my car ___.","had; repaired"],
+["Modal Perfects","Modal + have + past participle expresses past possibility, regret, criticism or deduction.","should have called; could have helped; might have forgotten; must have been tired.","should have = it would have been better; might have = possible; must have = strong deduction.","Choose: He isn't answering. He ___ have forgotten. / You ___ have told me.","might; should"],
+["Inversion","In formal or emphatic English, word order can invert after negative/restrictive expressions.","Never have I seen that. / Rarely do we get such an opportunity.","It is more formal and not necessary for everyday conversation.","Recognize it before worrying about producing it fluently.","Rewrite formally: I have never seen anything like this.","Never have I seen anything like this."],
+["Emphasis","Use do/does/did to emphasize a statement in simple tenses.","I do understand. / She did call me.","It can correct a misunderstanding or strongly emphasize truth.","Avoid overusing it; normal statements don't need do for emphasis.","Add emphasis: “I understand.”","I do understand."],
+["Advanced Relative Clauses","Explore non-defining clauses, whose, prepositions and more formal structures.","My manager, who lives nearby, is helpful. / The project on which we worked was successful.","Non-defining clauses normally use commas and do not use that.","Identify whether extra information needs commas.","Add punctuation: My brother who lives in New York is visiting.","Meaning depends on whether there is more than one brother; non-defining: My brother, who lives in New York, is visiting."],
+["Reduced Relative Clauses","Shorten relative clauses with participles when the meaning remains clear.","The man who is standing there → The man standing there. / The documents that were sent yesterday → The documents sent yesterday.","Common in formal writing and useful for concise descriptions.","Reduce: The people who are waiting outside.","The people waiting outside."],
+["Participles","Present participles (-ing) and past participles (-ed/irregular) can function as adjectives or parts of clauses.","a boring movie; a broken window; Walking home, I saw John.","Watch for dangling participles: the implied subject should match the main clause.","Identify: “Broken by the storm, the tree fell.”","“Broken” is a past participle describing the tree."],
+["Complex Sentence Structures","Combine clauses to express nuanced relationships and make speech/writing less repetitive.","Use subordinate clauses, relative clauses, conditionals and connectors to connect ideas.","Although I was tired, I kept studying because I wanted to improve.","Do not make every sentence complex. Clear simple sentences are also important.","Combine three short sentences about studying into one natural sentence.","Answers vary."]
+]},
+{title:"09 · Vocabulary", topics:[
+["Everyday English Vocabulary","Build vocabulary by situations instead of isolated word lists.","Study groups such as home, family, food, shopping, transportation, weather, health, work, education, technology, money and travel.","Learn each word with a phrase: make a decision, take a shower, catch a bus.","Avoid translating every word directly. Learn common collocations.","Choose one everyday topic and write 10 useful words plus one sentence for each.","Answers vary."],
+["Professional & IT English","Build vocabulary for interviews, customer service and IT environments.","Useful areas: troubleshooting, issue, ticket, deployment, database, server, network, cloud, backup, outage, requirements, deadline, stakeholder.","Learn phrases: troubleshoot an issue, resolve a ticket, deploy an application, meet a deadline.","Practice explaining technical ideas in simple English, not only memorizing terminology.","Explain in English how you would troubleshoot a user who cannot access an application.","Answers vary."]
+]},
+{title:"10 · Natural English", topics:[
+["Common Expressions","Learn fixed expressions that make speech sound natural.","That makes sense. / It depends. / I'm not sure. / As far as I know... / In my opinion... / The way I see it...","Use expressions as ready-made chunks.","Don't force expressions into every sentence; choose ones that match your meaning.","Answer a question using at least two natural expressions.","Answers vary."],
+["Conversation Fillers","Fillers give you time to think without long awkward pauses.","Well..., Actually..., Basically..., You know..., I mean..., Let me think..., That's a good question...","Use them naturally and sparingly.","Avoid repeating the same filler constantly, especially “so yeah.”","Give a 30-second answer about your job using two different fillers.","Answers vary."],
+["Connecting Ideas","Connect short ideas so your speech flows naturally.","Use because, so, but, although, however, also, in addition, for example, therefore, on the other hand.","A useful pattern: point → reason → example → result.","This is especially important when giving opinions or answering interview questions.","Connect: I like exercise. It helps me relax. I don't always have time.","I like exercise because it helps me relax, although I don't always have time."],
+["Storytelling","Tell a story with a clear beginning, sequence and result.","Useful tenses: Past Simple for main events, Past Continuous for background, Past Perfect for earlier events.","Structure: setting → problem → action → result → lesson.","Avoid listing disconnected sentences. Use then, while, when, after that, eventually.","Tell a one-minute story about a difficult problem you solved.","Answers vary."]
+]},
+{title:"11 · Pronunciation", topics:[
+["Basic Pronunciation","Review English vowel and consonant sounds rather than relying on Spanish spelling.","Practice short/long vowels, consonants and word endings. Listen, imitate and record yourself.","Focus on the sound of the whole word, not its Spanish spelling.","A dictionary with audio can help you compare your pronunciation.","Record yourself saying: work, world, thought, comfortable, development.","Answers vary."],
+["Difficult Sounds for Spanish Speakers","Pay special attention to TH, V, B, English R, H, SH, CH and J.","TH: think/this; V: very; R: red; H: house; SH: she; CH: chair; J: job.","Minimal pairs are useful: very/berry, ship/chip, thin/sin.","Don't worry about perfection. Aim for intelligibility and consistency.","Say aloud: think, this, very, berry, ship, chip, job, house.","Answers vary."],
+["Word Stress","One syllable is usually stronger in a multisyllabic word.","Stress affects vowel quality and rhythm. Example: PREsent (noun) vs preSENT (verb).","Learn stress with new vocabulary instead of memorizing spelling only.","Use dictionary stress marks or audio.","Mark the stressed syllable: development, important, present (verb).","deVELopment; imPORtant; preSENT"],
+["Sentence Stress","Content words usually receive more stress than small grammatical words.","Nouns, main verbs, adjectives and adverbs are often prominent. Articles and auxiliaries are often weaker.","Compare: I WANT to BUY a NEW CAR.","Stress can change meaning: “I wanted the RED one” vs “I wanted the red ONE.”","Read aloud: “I didn't say he stole the money.” Change stress each time and notice the meaning.","Answers vary."],
+["Connected Speech","In natural speech, words connect and sounds may reduce or change.","Common examples include wanna (want to) in informal speech, weak forms of function words and linking consonants/vowels.","The goal is first to understand connected speech; production can come later.","Do not use informal reductions in every context, especially formal interviews.","Listen to a short native clip and write what you hear, then compare with the transcript.","Answers vary."]
+]},
+{title:"12 · Fluency", topics:[
+["30-Second Speaking","Give a short answer with a clear beginning, middle and ending.","Use a simple structure: answer → reason → example.","Avoid trying to use advanced grammar in every sentence. Fluency comes from keeping the message moving.","Topic: What do you usually do on weekends?","Speak for 30 seconds without stopping. Then identify one grammar mistake and one word you want to improve.","Answers vary."],
+["1-Minute Speaking","This matches common speaking-test tasks and is excellent for rebuilding fluency.","Use: opinion → advantage/reason → example → opposite point → conclusion.","Try to avoid repeating “so” or “so yeah.” Use connectors such as however, for example and overall.","Topic: Should university students study a foreign language?","Speak for one minute and record yourself. Then transcribe it and correct your grammar.","Answers vary."],
+["2–3 Minute Speaking","Longer speaking requires organization, not just more vocabulary.","Use introduction → 2 or 3 points → examples → conclusion.","If you forget a word, explain it another way instead of stopping.","Topic: Describe a difficult problem you solved and what you learned.","Speak for 2–3 minutes. Count how many times you pause for more than three seconds.","Answers vary."],
+["Retelling","Listen to or read something and explain it in your own words.","Focus on meaning rather than reproducing exact sentences. Use past tenses and connectors.","This combines listening, vocabulary, grammar and speaking.","Choose a short video or article and retell it without looking at the original.","Retell in 60–90 seconds and compare with the original.","Answers vary."],
+["Giving Opinions","Develop a repeatable structure for opinions.","Opinion → reason → example → second point → conclusion. Useful phrases: In my opinion, I believe, the main reason is, for example, overall.","Avoid “I think” in every sentence. Vary your language.","Topic: Is remote work better than working in an office?","Give a one-minute opinion using at least three connectors.","Answers vary."],
+["Storytelling Practice","Use stories to activate multiple tenses naturally.","Describe what happened, what you were doing, what had happened before, and what happened afterward.","Stories are one of the best ways to turn passive grammar knowledge into active English.","Topic: Tell me about a time you learned something difficult.","Speak for 2 minutes and try to use Past Simple, Past Continuous and Past Perfect.","Answers vary."],
+["Interview Practice","Practice concise professional answers using real examples.","Common questions: Tell me about yourself. What are your strengths? Tell me about a challenge. Why do you want this job? Describe a mistake and what you learned.","Use the STAR pattern for behavioral questions: Situation, Task, Action, Result.","Avoid memorizing a script word-for-word. Memorize ideas and useful phrases.","Answer: “Tell me about a time you had to learn a new system quickly.”","Answers vary."]
+]}
+];
+
+/* Build sidebar and lessons */
+const nav = document.getElementById("nav"), lessons = document.getElementById("lessons");
+let topicCount=0;
+sections.forEach((sec,si)=>{
+  const navSec=document.createElement("div"); navSec.className="nav-section";
+  const title=document.createElement("div"); title.className="nav-section-title"; title.textContent=sec.title;
+  navSec.appendChild(title);
+  const level=document.createElement("section"); level.className="level"; level.id="level-"+si;
+  level.innerHTML=`<div class="level-title"><span class="level-number">${si+1}</span><h2>${sec.title.replace(/^\d+\s·\s/,"")}</h2></div>`;
+  sec.topics.forEach((t,ti)=>{
+    topicCount++;
+    const id=`topic-${si}-${ti}`;
+    const btn=document.createElement("button"); btn.className="nav-item"; btn.dataset.target=id;
+    btn.innerHTML=`<span class="dot"></span><span>${t[0]}</span>`;
+    btn.onclick=()=>{document.getElementById(id).scrollIntoView({behavior:"smooth",block:"start"}); if(innerWidth<=900) document.getElementById("sidebar").classList.remove("open");};
+    navSec.appendChild(btn);
+    const article=document.createElement("article"); article.className="topic"; article.id=id;
+    article.dataset.search=(t[0]+" "+t[1]+" "+t[2]+" "+t[3]+" "+t[4]).toLowerCase();
+    article.innerHTML=`
+      <button class="topic-header">
+        <span class="topic-title">${t[0]}</span><span class="topic-status">Review</span><span class="chevron">›</span>
+      </button>
+      <div class="topic-body">
+        <p>${t[1]}</p>
+        <h3>📘 Explanation</h3><p>${t[2]}</p>
+        <div class="example"><strong>💬 Examples</strong>${t[3]}</div>
+        <div class="warning"><strong>⚠️ Common mistake</strong><br>${t[4]}</div>
+        <h3>🎯 Practice</h3>
+        ${makeExercises(t[5],t[6])}
+        <label class="complete"><input type="checkbox" class="done-box" data-id="${id}"> Mark this topic as completed</label>
+      </div>`;
+    level.appendChild(article);
+    article.querySelector(".topic-header").onclick=()=>article.classList.toggle("open");
+    lessons.appendChild(level);
+  });
+  nav.appendChild(navSec);
+});
+document.getElementById("progressText").dataset.total=topicCount;
+
+function makeExercises(q,a){
+  const items=[
+    q,
+    "Create your own sentence using the grammar or vocabulary from this topic.",
+    "Explain the main rule aloud in your own words.",
+    "Make one question and one answer using this topic.",
+    "Give a real-life example where you would use this English."
+  ];
+  return items.map((x,i)=>`<div class="exercise"><p><b>${i+1}.</b> ${x}</p><button class="show-answer">Show answer / guidance</button><div class="answer">${i===0?a:"Answers vary. Focus on correct grammar, natural word order and clear pronunciation."}</div></div>`).join("");
+}
+
+document.addEventListener("click",e=>{
+ if(e.target.classList.contains("show-answer")){
+   e.target.nextElementSibling.classList.toggle("show");
+   e.target.textContent=e.target.nextElementSibling.classList.contains("show")?"Hide answer":"Show answer / guidance";
+ }
+});
+function updateProgress(){
+ const boxes=[...document.querySelectorAll(".done-box")], done=boxes.filter(x=>x.checked).length;
+ const pct=boxes.length?Math.round(done/boxes.length*100):0;
+ document.getElementById("progressBar").style.width=pct+"%";
+ document.getElementById("progressText").textContent=pct+"%";
+ boxes.forEach(b=>{
+   const navBtn=document.querySelector(`[data-target="${b.dataset.id}"]`);
+   if(navBtn) navBtn.classList.toggle("done",b.checked);
+ });
+ localStorage.setItem("englishRefreshProgress",JSON.stringify(boxes.filter(x=>x.checked).map(x=>x.dataset.id)));
+}
+const saved=JSON.parse(localStorage.getItem("englishRefreshProgress")||"[]");
+document.querySelectorAll(".done-box").forEach(b=>{b.checked=saved.includes(b.dataset.id);b.addEventListener("change",updateProgress)});
+updateProgress();
+
+document.getElementById("resetBtn").onclick=()=>{
+ if(confirm("Reset all completed topics?")){
+   document.querySelectorAll(".done-box").forEach(b=>b.checked=false);updateProgress();
+ }
+};
+document.getElementById("search").addEventListener("input",e=>{
+ const q=e.target.value.toLowerCase().trim(); let found=0;
+ document.querySelectorAll(".topic").forEach(t=>{
+   const ok=!q||t.dataset.search.includes(q);
+   t.style.display=ok?"block":"none"; if(ok) found++;
+ });
+ document.querySelectorAll(".level").forEach(l=>{
+   const visible=[...l.querySelectorAll(".topic")].some(t=>t.style.display!=="none");
+   l.style.display=visible?"block":"none";
+ });
+ document.getElementById("empty").style.display=found?"none":"block";
+});
+document.getElementById("menuBtn").onclick=()=>document.getElementById("sidebar").classList.toggle("open");
+</script>
+</body>
+</html>
